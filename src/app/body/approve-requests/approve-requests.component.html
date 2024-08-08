@@ -1,0 +1,84 @@
+<div class="content">
+  @if (showActions && hostUris.length == 0 && redirectUris.length == 0) {
+  <h2>No Pending Requests</h2>
+  } @if (hostUris.length > 0){ @if (showHostUris){ @if (showActions) {
+  <h2>Host URIs</h2>
+  } @else {
+  <h2>Pending Requests</h2>
+  }
+  <table class="approval-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>URI</th>
+        @if (showActions) {
+        <th>Actions</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (hostUri of hostUris; track $index) {
+      <tr>
+        <td>{{ hostUri.name }}</td>
+        @if (hostUri.originalUri === "NULL") {
+        <td>{{ hostUri.uri }}</td>
+        } @else {
+        <td>
+          {{ hostUri.originalUri }}
+          <mat-icon class="uri-icon">east</mat-icon>
+          {{ hostUri.uri }}
+        </td>
+        } @if (showActions) {
+        <td>
+          <button mat-button (click)="approveHostUri(hostUri)">Approve</button>
+          <button mat-button (click)="rejectHostUri(hostUri)">Reject</button>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+  } } @if (redirectUris.length > 0){ @if (showRedirectUris) { @if (showActions)
+  {
+  <h2>Redirect URIs</h2>
+  } @else {
+  <h2>Pending Requests</h2>
+  }
+  <table class="approval-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>URI</th>
+        @if (showActions) {
+        <th>Actions</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (redirectUri of redirectUris; track $index) {
+      <tr>
+        <td>{{ redirectUri.name }}</td>
+        @if (redirectUri.originalUri === "NULL") {
+        <td>{{ redirectUri.uri }}</td>
+        } @else {
+        <td>
+          {{ redirectUri.originalUri }}
+          <mat-icon class="uri-icon">east</mat-icon>
+          {{ redirectUri.uri }}
+        </td>
+        } @if (showActions) {
+        <td>
+          <button mat-button (click)="approveRedirectUri(redirectUri)">
+            Approve
+          </button>
+          <button mat-button (click)="rejectRedirectUri(redirectUri)">
+            Reject
+          </button>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+  } }
+</div>

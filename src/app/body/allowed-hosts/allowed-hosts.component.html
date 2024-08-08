@@ -1,0 +1,109 @@
+<div class="content">
+  @if (hosts.length > 0) {
+  <ng-container>
+    <h2>Hosts</h2>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Hosts </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul>
+          @for (host of hosts; track $index) {
+          <li>
+            @if (!editMode[$index]) {
+            <div>
+              <a
+                title="Edit URI"
+                href="#"
+                (click)="toggleEditMode($index); $event.preventDefault()"
+                >{{ host }}</a
+              >
+            </div>
+            } @if (editMode[$index]) {
+            <div>
+              <form [formGroup]="editUriForm[$index]">
+                <p>
+                  <label class="label" for="editedHostUri">Edit Host URI</label>
+                  <input
+                    class="hostUri"
+                    type="text"
+                    name="editedHostUri"
+                    id="editedHostUri"
+                    formControlName="editedHostUri"
+                    [ngClass]="{
+                      'error-border': invalidEditUri($index)
+                    }"
+                  />
+                </p>
+                @if (invalidEditUri($index)) {
+                <div>
+                  <p class="error">Please provide a valid input</p>
+                </div>
+                }
+              </form>
+              <button mat-button (click)="cancelEdit($index)">Cancel</button>
+              <button
+                mat-button
+                [disabled]="editUriForm[$index].invalid"
+                (click)="saveEditUri($index)"
+              >
+                Request to Save
+              </button>
+            </div>
+            }
+          </li>
+          }
+        </ul>
+        <button
+          class="addButton"
+          mat-icon-button
+          (click)="showAddUriForm ? onHideAddUriForm() : onShowAddUriForm()"
+        >
+          <mat-icon>{{
+            showAddUriForm ? "playlist_remove" : "playlist_add"
+          }}</mat-icon>
+        </button>
+        @if (!showAddUriForm) {
+        <span class="addUri">Add URI</span>
+        } @if (showAddUriForm) {
+        <div>
+          <form [formGroup]="uriForm">
+            <p>
+              <label class="label" for="newHostUri">New Host URI</label>
+              <input
+                class="hostUri"
+                type="text"
+                name="newHostUri"
+                id="newHostUri"
+                formControlName="newHostUri"
+                [ngClass]="{
+                  'error-border': invalidAddUri()
+                }"
+              />
+            </p>
+            @if (invalidAddUri()) {
+            <div>
+              <p class="error">Please provide a valid input</p>
+            </div>
+            }
+          </form>
+          <button mat-button (click)="onHideAddUriForm()">Cancel</button>
+          <button
+            mat-button
+            [disabled]="uriForm.invalid"
+            (click)="addHostUri()"
+          >
+            Request to add URI
+          </button>
+        </div>
+        }
+      </mat-expansion-panel>
+    </mat-accordion>
+    <app-approve-requests
+      [showActions]="false"
+      [showRedirectUris]="false"
+      [showHostUris]="true"
+    ></app-approve-requests>
+  </ng-container>
+  }
+</div>

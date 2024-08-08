@@ -1,0 +1,32 @@
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #494945;
+  color: white;
+  font-family: "Cabin-Medium";
+}
+
+mat-toolbar span {
+  cursor: pointer;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  height: 100px;
+}
+
+.logout{
+  padding: 10px;
+  background-color: #dfdddf;
+  border: none;
+  cursor: pointer;
+  font-family: "Cabin-Medium";
+}
+
+.logout:hover{
+  background-color: #bea9be;
+}

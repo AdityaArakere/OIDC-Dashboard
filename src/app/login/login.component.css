@@ -1,0 +1,63 @@
+/* Styles for fullscreen login dialog */
+.fullscreen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../../../public/login-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.login-container {
+  font-family: "Cabin-Medium";
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.login-message {
+  color: white;
+  font-size: 39px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.login-button {
+  font-family: "Cabin-Medium";
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: black;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #ffffff;
+  transform: scale(1.05);
+}
+
+.login-button:active {
+  background-color: rgb(149, 73, 211);
+  transform: scale(1);
+}
+
+.login-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 35px;
+  height: 90px; /* Adjust as needed */
+}

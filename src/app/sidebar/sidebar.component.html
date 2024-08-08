@@ -1,0 +1,24 @@
+<mat-nav-list>
+  <a routerLink="/applications" mat-list-item (click)="displayApplications()"
+    >Applications</a
+  >
+  <a routerLink="/hosts" mat-list-item (click)="displayHosts()"
+    >Allowed Hosts</a
+  >
+  @if (showApprovalRequests) {
+  <a
+    routerLink="/approveRequests"
+    mat-list-item
+    (click)="displayApproveRequests()"
+    >Approve Requests</a
+  >
+  }
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-clip-rotate"
+    [fullScreen]="true"
+    ><p style="color: white">Loading...</p></ngx-spinner
+  ></mat-nav-list
+>

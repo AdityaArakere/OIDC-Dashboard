@@ -1,0 +1,11 @@
+@if (this.activeAccounts) {
+<app-header />
+<div class="dashboard-container">
+  <app-sidebar />
+  <div class="content">
+    <router-outlet />
+  </div>
+</div>
+} @else {
+<app-login />
+}

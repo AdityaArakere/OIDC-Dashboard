@@ -1,0 +1,132 @@
+<div class="content">
+  @if (applications.length > 0) {
+  <ng-container>
+    <h2>Applications</h2>
+    <mat-accordion>
+      @for (application of applications; track $index; let appIndex = $index) {
+      <ng-container>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ application.displayName }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Redirect URIs:</p>
+          <ul>
+            @for (uri of application.redirectUris; track $index; let uriIndex =
+            $index) {
+            <ng-container>
+              @if (!editMode[appIndex][uriIndex]) {
+              <li>
+                <div>
+                  <a
+                    title="Edit URI"
+                    href="#"
+                    (click)="
+                      toggleEditMode(appIndex, uriIndex);
+                      $event.preventDefault()
+                    "
+                    >{{ uri }}</a
+                  >
+                </div>
+              </li>
+              } @if (editMode[appIndex][uriIndex]) {
+              <li>
+                <div>
+                  <form [formGroup]="editUriForm[appIndex][uriIndex]">
+                    <p>
+                      <label class="label" for="editedUri">Edit URI</label>
+                      <input
+                        class="hostUri"
+                        type="text"
+                        name="editedUri"
+                        id="editedUri"
+                        formControlName="editedUri"
+                        [ngClass]="{
+                          'error-border': invalidEditUri(appIndex, uriIndex)
+                        }"
+                      />
+                    </p>
+                    @if (invalidEditUri(appIndex, uriIndex)) {
+                    <div>
+                      <p class="error">Please provide a valid input</p>
+                    </div>
+                    }
+                  </form>
+                  <button mat-button (click)="cancelEdit(appIndex, uriIndex)">
+                    Cancel
+                  </button>
+                  <button
+                    mat-button
+                    [disabled]="editUriForm[appIndex][uriIndex].invalid"
+                    (click)="saveEditUri(appIndex, uriIndex)"
+                  >
+                    Request to save
+                  </button>
+                </div>
+              </li>
+              }
+            </ng-container>
+            }
+          </ul>
+          <button
+            class="addButton"
+            mat-icon-button
+            (click)="
+              application.showAddUriForm
+                ? (application.showAddUriForm = false)
+                : (application.showAddUriForm = true)
+            "
+          >
+            <mat-icon>{{
+              application.showAddUriForm ? "playlist_remove" : "playlist_add"
+            }}</mat-icon>
+          </button>
+          @if (!application.showAddUriForm) {
+          <span class="addUri">Add URI</span>
+          } @if (application.showAddUriForm) {
+          <div>
+            <form [formGroup]="uriForm">
+              <p>
+                <label class="label" for="newUri">New URI</label>
+                <input
+                  class="hostUri"
+                  type="text"
+                  name="newUri"
+                  id="newUri"
+                  formControlName="newUri"
+                  [ngClass]="{
+                    'error-border': invalidAddUri()
+                  }"
+                />
+              </p>
+              @if (invalidAddUri()) {
+              <div>
+                <p class="error">Please provide a valid input</p>
+              </div>
+              }
+            </form>
+            <button mat-button (click)="application.showAddUriForm = false">
+              Cancel
+            </button>
+            <button
+              mat-button
+              [disabled]="uriForm.invalid"
+              (click)="addUri(application)"
+            >
+              Request to add URI
+            </button>
+          </div>
+          }
+        </mat-expansion-panel>
+      </ng-container>
+      }
+    </mat-accordion>
+    <app-approve-requests
+      [showActions]="false"
+      [showRedirectUris]="true"
+      [showHostUris]="false"
+    ></app-approve-requests>
+  </ng-container>
+  }
+</div>

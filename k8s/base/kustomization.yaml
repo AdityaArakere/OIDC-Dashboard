@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: authentication
+nameSuffix: -v1
+
+resources:
+- bmiapps-proxy-service.yaml
+- webapp-ingress.yaml
+
+configMapGenerator:
+- name: environment
+  literals:
+  - BASE_HOSTNAME=.brandmuscle.net
+  - BMIAPPS_STORAGE_URL=bmiappsdev.z13.web.core.windows.net
+
+vars:
+- name: BASE_HOSTNAME
+  objref:
+    kind: ConfigMap
+    name: environment
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.BASE_HOSTNAME
+
+- name: BMIAPPS_STORAGE_URL
+  objref:
+    kind: ConfigMap
+    name: environment
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.BMIAPPS_STORAGE_URL
+
+configurations:
+- configuration.yaml
