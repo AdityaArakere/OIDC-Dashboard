@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: authentication
+  name: oidc-dashboard-webapi
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    app.brandmuscle.com/token-replacement: AzureDevOps 
+spec:
+  rules:
+  - host: '*.#{BrandBuilderBaseDomain}#'
+    http:
+      paths: 
+      - backend:
+          service:
+            name: oidc-dashboard-webapi-v1
+            port: 
+              number: 80
+        path: /api/oidc-dashboard/v1(/|$)(.*)
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - '*.brandmuscle.net'
+    secretName: brandbuilder-tls
+      

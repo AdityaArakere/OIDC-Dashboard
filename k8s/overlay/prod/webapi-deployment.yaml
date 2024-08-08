@@ -1,0 +1,7 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: authentication
+  name: oidc-dashboard-webapi-v1
+spec:
+  replicas: 2
